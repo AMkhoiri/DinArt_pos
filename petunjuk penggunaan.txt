@@ -1,0 +1,4 @@
+admin:
+
+username: feri
+pass	: aaaaaa

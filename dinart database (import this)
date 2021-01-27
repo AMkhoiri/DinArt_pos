@@ -1,0 +1,254 @@
+/*
+SQLyog Ultimate v12.5.1 (64 bit)
+MySQL - 10.1.34-MariaDB : Database - dinart
+*********************************************************************
+*/
+
+/*!40101 SET NAMES utf8 */;
+
+/*!40101 SET SQL_MODE=''*/;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+USE `dinart`;
+
+
+
+/*Table structure for table `box` */
+
+DROP TABLE IF EXISTS `box`;
+
+CREATE TABLE `box` (
+  `id` int(30) NOT NULL AUTO_INCREMENT,
+  `kode_box` varchar(50) DEFAULT NULL,
+  `lokasi` longtext,
+  `keterangan` longtext,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
+/*Table structure for table `barang` */
+
+DROP TABLE IF EXISTS `barang`;
+
+CREATE TABLE `barang` (
+  `id` int(30) NOT NULL AUTO_INCREMENT,
+  `kode` int(30) DEFAULT NULL,
+  `nama` varchar(130) DEFAULT NULL,
+  `jenis` varchar(30) DEFAULT NULL,
+  `stok` int(30) DEFAULT NULL,
+  `terjual` int(30) DEFAULT NULL,
+  `harga` float DEFAULT NULL,
+  `diskon` int(10) DEFAULT NULL,
+  `deskripsi` longtext,
+  `status` varchar(50) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
+
+/*Table structure for table `pegawai` */
+
+DROP TABLE IF EXISTS `pegawai`;
+
+CREATE TABLE `pegawai` (
+  `id` int(30) NOT NULL AUTO_INCREMENT,
+  `nama` varchar(130) DEFAULT NULL,
+  `alamat` varchar(220) DEFAULT NULL,
+  `telepon` varchar(20) DEFAULT NULL,
+  `jenis_kelamin` varchar(30) DEFAULT NULL,
+  `status_akun` varchar(100) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+/*Table structure for table `users` */
+
+DROP TABLE IF EXISTS `users`;
+
+CREATE TABLE `users` (
+  `id` bigint(30) unsigned NOT NULL AUTO_INCREMENT,
+  `id_pegawai` int(30) DEFAULT NULL,
+  `id_box` int(30) DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pass` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `role` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_pegawai` (`id_pegawai`),
+  KEY `id_box` (`id_box`),
+  CONSTRAINT `users_ibfk_1` FOREIGN KEY (`id_pegawai`) REFERENCES `pegawai` (`id`),
+  CONSTRAINT `users_ibfk_2` FOREIGN KEY (`id_box`) REFERENCES `box` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Data for the table `pegawai` */
+
+insert  into `pegawai`(`id`,`nama`,`alamat`,`telepon`,`jenis_kelamin`,`status_akun`,`created_at`,`updated_at`) values 
+(1,'sulaiman hola alfaridzi','alamaattttt','08976543456','laki-laki',NULL,'2020-12-08 14:17:50','2021-01-01 19:49:06'),
+(3,'asdasf','asfasf','r23r23r','perempuan',NULL,'2020-12-10 11:38:02','2021-01-12 11:48:49'),
+(4,'ahmad rudolf subagio','wewefwe','32423434234','laki-laki','registered','2020-12-10 11:38:26','2021-01-01 19:26:34'),
+(5,'ferinando','asdf','0897654356','laki-laki','registered','2020-12-10 11:38:55','2020-12-28 13:03:15'),
+(6,'romanio rahardjo','asfasfdf','asfasfdfg','laki-laki','registered','2020-12-10 11:39:54','2021-01-21 19:35:53'),
+(7,'leonardo sadikin','alas purwo','0897654536','laki-laki','registered','2021-01-15 19:57:54','2021-01-15 20:04:23'),
+(8,'edwin anugerah','tehran','0876536473','laki-laki','registered','2021-01-15 20:02:01','2021-01-15 20:04:47');
+
+Data for the table `users` */
+
+insert  into `users`(`id`,`id_pegawai`,`id_box`,`name`,`email`,`username`,`email_verified_at`,`password`,`pass`,`role`,`remember_token`,`created_at`,`updated_at`) values 
+(12,5,7,'ferinando',NULL,'feri',NULL,'$2y$10$YaAlDGTqRAM.quxaEoTlRObdDvBHaYpxaBKnFTWovvKLvob3tcqQ2','aaaaaa','admin',NULL,'2020-12-28 13:03:15','2020-12-28 13:03:15'),
+(13,4,8,'ahmad rudolf subagio',NULL,'subagjo',NULL,'$2y$10$aKBHEr8T85NFBt5u4wwV8u7dS2m4flkL4Upc0xWByOxq49fe86YVG','ssssss','admin',NULL,'2021-01-01 19:26:34','2021-01-11 09:13:41'),
+(14,7,8,'leonardo sadikin',NULL,'leo',NULL,'$2y$10$UQaKbPWuYLkWCH8lHKBuTOohTEdHNdmpuHND4J0Q0.iUkvo2HwG8q','aaaaaa','cs',NULL,'2021-01-15 20:04:23','2021-01-15 20:04:23'),
+(15,8,9,'edwin anugerah',NULL,'edwin',NULL,'$2y$10$5nWQgJ5GWyx2arc6AKE4HuAxw6pnpB5ipg.lxdXBCyglMMBn6bAR2','aaaaaa','cs',NULL,'2021-01-15 20:04:47','2021-01-15 20:04:47'),
+(16,6,NULL,'romanio rahardjo',NULL,'roman',NULL,'$2y$10$gu59n47oO2mEGcZs4HM9POJ4MdxIWhEzmw2PU4cG7cbF1ybME7Lcq','aaaaaa','produksi',NULL,'2021-01-21 19:35:53','2021-01-21 19:35:53');
+
+
+/*Table structure for table `migrations` */
+
+DROP TABLE IF EXISTS `migrations`;
+
+CREATE TABLE `migrations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+/*Table structure for table `orders` */
+
+DROP TABLE IF EXISTS `orders`;
+
+CREATE TABLE `orders` (
+  `id` int(30) NOT NULL AUTO_INCREMENT,
+  `id_box` int(30) DEFAULT NULL,
+  `kode_transaksi` varchar(66) DEFAULT NULL,
+  `nama_cs` varchar(150) DEFAULT NULL,
+  `telepon_cs` varchar(20) DEFAULT NULL,
+  `catatan` longtext,
+  `waktu_pengambilan` time DEFAULT NULL,
+  `tanggal_pengambilan` date DEFAULT NULL,
+  `tanggal_terima` datetime DEFAULT NULL,
+  `harga_total` int(40) DEFAULT NULL,
+  `tagihan` int(40) DEFAULT NULL,
+  `dp` int(30) DEFAULT NULL,
+  `bayar` int(30) DEFAULT NULL,
+  `kembalian` int(30) DEFAULT NULL,
+  `tanggal_lunas` datetime DEFAULT NULL,
+  `status_pembayaran` varchar(50) DEFAULT NULL,
+  `status_produksi` varchar(50) DEFAULT NULL,
+  `status_pengiriman` varchar(50) DEFAULT NULL,
+  `status_order` varchar(50) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_box` (`id_box`),
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`id_box`) REFERENCES `box` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=826 DEFAULT CHARSET=latin1;
+
+
+/*Table structure for table `order_item` */
+
+DROP TABLE IF EXISTS `order_item`;
+
+CREATE TABLE `order_item` (
+  `id` int(30) NOT NULL AUTO_INCREMENT,
+  `id_order` int(30) DEFAULT NULL,
+  `id_barang` int(30) DEFAULT NULL,
+  `nama_barang` varchar(255) DEFAULT NULL,
+  `harga_barang` double DEFAULT NULL,
+  `diskon_barang` int(30) DEFAULT NULL,
+  `panjang` int(30) DEFAULT NULL,
+  `lebar` int(30) DEFAULT NULL,
+  `qty` int(30) DEFAULT NULL,
+  `harga_item` int(30) DEFAULT NULL,
+  `catatan_item` longtext,
+  `status_produksi` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_barang` (`id_barang`),
+  KEY `order_item_ibfk_1` (`id_order`),
+  CONSTRAINT `order_item_ibfk_1` FOREIGN KEY (`id_order`) REFERENCES `orders` (`id`),
+  CONSTRAINT `order_item_ibfk_2` FOREIGN KEY (`id_barang`) REFERENCES `barang` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=581 DEFAULT CHARSET=latin1;
+
+/*Table structure for table `pelanggan` */
+
+DROP TABLE IF EXISTS `pelanggan`;
+
+CREATE TABLE `pelanggan` (
+  `id` int(30) NOT NULL AUTO_INCREMENT,
+  `id_order` int(30) DEFAULT NULL,
+  `nama` varchar(150) DEFAULT NULL,
+  `alamat` varchar(220) DEFAULT NULL,
+  `telepon` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_order` (`id_order`),
+  CONSTRAINT `pelanggan_ibfk_1` FOREIGN KEY (`id_order`) REFERENCES `orders` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=397 DEFAULT CHARSET=latin1;
+
+
+
+/*Table structure for table `orders_report` */
+
+DROP TABLE IF EXISTS `orders_report`;
+
+CREATE TABLE `orders_report` (
+  `id` int(30) NOT NULL AUTO_INCREMENT,
+  `id_box` int(30) DEFAULT NULL,
+  `kode_transaksi` varchar(30) DEFAULT NULL,
+  `nama_pelanggan` varchar(120) DEFAULT NULL,
+  `telepon_pelanggan` varchar(30) DEFAULT NULL,
+  `nama_cs` varchar(120) DEFAULT NULL,
+  `telepon_cs` varchar(30) DEFAULT NULL,
+  `catatan` longtext,
+  `tanggal_terima` datetime DEFAULT NULL,
+  `harga_total` int(30) DEFAULT NULL,
+  `dp` int(30) DEFAULT NULL,
+  `bayar` int(30) DEFAULT NULL,
+  `kembalian` int(30) DEFAULT NULL,
+  `tanggal_transaksi` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_box` (`id_box`),
+  CONSTRAINT `orders_report_ibfk_1` FOREIGN KEY (`id_box`) REFERENCES `box` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=latin1;
+
+
+/*Table structure for table `order_item_report` */
+
+DROP TABLE IF EXISTS `order_item_report`;
+
+CREATE TABLE `order_item_report` (
+  `id` int(30) NOT NULL AUTO_INCREMENT,
+  `id_order_report` int(30) DEFAULT NULL,
+  `nama_barang` varchar(150) DEFAULT NULL,
+  `jenis_barang` varchar(50) DEFAULT NULL,
+  `harga_barang` int(30) DEFAULT NULL,
+  `diskon_barang` int(30) DEFAULT NULL,
+  `panjang` int(30) DEFAULT NULL,
+  `lebar` int(30) DEFAULT NULL,
+  `qty` int(30) DEFAULT NULL,
+  `harga_item` int(30) DEFAULT NULL,
+  `catatan_item` longtext,
+  PRIMARY KEY (`id`),
+  KEY `id_order_report` (`id_order_report`),
+  CONSTRAINT `order_item_report_ibfk_1` FOREIGN KEY (`id_order_report`) REFERENCES `orders_report` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=latin1;
+
+
+
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
